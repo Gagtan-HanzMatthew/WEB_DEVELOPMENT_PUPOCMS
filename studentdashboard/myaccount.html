@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Student Account — PUP Taguig Clinic</title>
+		<link rel="stylesheet" href="booking.css" />
+		<link rel="stylesheet" href="profile.css" />
+		<style>
+			/* Small additions for dashboard layout */
+			.student-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0}
+			.profile-card{display:flex;gap:14px;align-items:center}
+			.profile-avatar{width:64px;height:64px;border-radius:12px;background:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)}
+				.status-badge{padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
+				.status-active{background: rgba(139,0,0,0.08); color: var(--accent)}
+			.status-inactive{background:#fff1f0;color:#9b2b2b}
+			.status-caps{letter-spacing:0.6px}
+			.quick-cards{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+			.quick-card{background:var(--card-bg);padding:12px;border-radius:10px;min-width:140px;box-shadow:0 8px 20px rgba(16,24,28,0.04);display:flex;flex-direction:column;gap:8px}
+			.quick-card .count{font-size:20px;font-weight:800;color:var(--accent)}
+			.dashboard-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:18px}
+			@media(max-width:880px){ .dashboard-grid{grid-template-columns:1fr} .quick-cards{justify-content:space-between} }
+			.appointments-list .apt-actions button{font-size:13px;padding:6px 8px}
+			.notifications{display:flex;flex-direction:column;gap:8px}
+			.notif{background:#fff;padding:10px;border-radius:8px;border:1px solid #f0f2f3;font-size:13px}
+			.profile-form label{font-weight:700;font-size:13px}
+		</style>
+	</head>
+	<body>
+		<header class="site-header">
+			<div class="container header-inner">
+				<div class="header-left">
+					<a class="brand-link" href="homepage_student.html">
+						<img src="pup_logo.png" alt="PUP Taguig" class="brand-img" />
+						<span class="brand-text">
+							<span class="brand-title">PUP TAGUIG</span>
+							<span class="brand-subtitle">Online Clinic</span>
+						</span>
+					</a>
+				</div>
+
+				<button class="nav-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="#20343A" stroke-width="2" stroke-linecap="round"/></svg>
+				</button>
+
+				<nav id="main-menu" class="main-nav" role="navigation">
+					<ul class="nav-list">
+						<li><a href="homepage_student.html">Home</a></li>
+						<li><a href="booking.html">Appointments</a></li>
+						<li><a href="myaccount.html">My Account</a></li>
+						<li><a href="FAQ.html">FAQ</a></li>
+					</ul>
+				</nav>
+
+        
+			</div>
+		</header>
+
+		<main class="container">
+			<section class="card">
+				<div class="student-header profile-header" role="region" aria-label="Student profile header">
+					<!-- Left: Avatar / upload -->
+					<div class="profile-left">
+						<div class="avatar-wrap" id="avatarWrap">
+							<img id="avatarImg" alt="Student profile photo" src="" aria-hidden="true" />
+							<div id="avatarInitials" class="avatar-initials" aria-hidden="true"></div>
+							<button id="avatarUploadBtn" class="change-photo-btn" aria-label="Change profile photo" title="Change profile photo">Change Photo</button>
+							<input id="avatarFileInput" type="file" accept="image/png, image/jpeg" style="display:none" aria-hidden="true" />
+						</div>
+						<div class="profile-meta">
+							<div id="fullName" class="profile-name">Student Name</div>
+							<div id="studentMeta" class="profile-sub">ID • Course / Year</div>
+						</div>
+					</div>
+
+					<!-- Right: Status -->
+					<div class="profile-right">
+						<div>
+							<div class="status-badge status-caps" id="accountStatus">Active</div>
+							<div class="member-since small">Member since <span id="memberSince">2025</span></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="quick-cards" role="region" aria-label="Status summary">
+					<div class="quick-card" id="cardPending"><div class="small">Pending Appointments</div><div class="count" id="pendingCount">0</div></div>
+					<div class="quick-card" id="cardUpcoming"><div class="small">Upcoming Appointments</div><div class="count" id="upcomingCount">0</div></div>
+					<div class="quick-card" id="cardCompleted"><div class="small">Completed Consultations</div><div class="count" id="completedCount">0</div></div>
+					<div class="quick-card" id="cardCancelled"><div class="small">Cancelled Requests</div><div class="count" id="cancelledCount">0</div></div>
+				</div>
+			</section>
+
+			<div class="dashboard-grid">
+				<section>
+					<h2 style="margin-top:18px">My Appointments</h2>
+					<p class="small">Track your current requests. Edit only allowed while status is Pending.</p>
+
+					<div class="card appointments-list" id="appointmentsContainer" aria-live="polite"></div>
+
+					<section style="margin-top:16px" class="card">
+						<h3 style="margin-top:0">Appointment History</h3>
+						<div id="historyList" class="small" style="margin-top:8px"></div>
+					</section>
+				</section>
+
+				<aside>
+					<div class="card">
+						<h4 style="margin-top:0">Notifications</h4>
+						<div class="notifications" id="notifications"></div>
+					</div>
+
+					<div style="height:12px"></div>
+
+					<div class="card">
+						<h4 style="margin-top:0">Profile</h4>
+						<form id="profileForm" class="profile-form">
+							<div class="small" style="margin-bottom:8px">Basic profile — limited editing.</div>
+							<div class="form-row">
+								<label>Full Name</label>
+								<input id="p_fullName" disabled />
+							</div>
+							<div class="form-row">
+								<label>Student ID</label>
+								<input id="p_studentId" disabled />
+							</div>
+							<div class="form-row">
+								<label>Email</label>
+								<input id="p_email" disabled />
+							</div>
+							<div class="form-row">
+								<label>Contact Number (editable)</label>
+								<input id="p_contact" />
+							</div>
+							<div class="form-row">
+								<label>Emergency Contact (editable)</label>
+								<input id="p_emergency" />
+							</div>
+							<div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end">
+								<button type="button" id="saveProfile" class="btn">Save</button>
+								<button type="button" id="logoutBtn" class="btn ghost">Logout</button>
+							</div>
+						</form>
+					</div>
+
+					<div style="height:12px"></div>
+
+					<div class="card">
+						<h4 style="margin-top:0">Account Actions</h4>
+						<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+							<button id="changePassword" class="btn ghost">Change Password</button>
+							<a href="homepage_student.html" class="btn">Back to Home</a>
+						</div>
+					</div>
+				</aside>
+			</div>
+		</main>
+
+		<script>
+			// Keys used
+			const KEY = 'pup_appointments_v1';
+			const PROFILE = 'pup_profile_v1';
+			const NOTIF = 'pup_notifications_v1';
+			const EDIT_KEY = 'pup_edit_requests_v1';
+
+			// Utilities
+			const qs = s=>document.querySelector(s);
+			function read(key){ try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []} }
+			function write(key,v){ localStorage.setItem(key, JSON.stringify(v)); }
+			function todayISO(){ const d=new Date(); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); }
+
+			// Load profile (if absent, create demo profile)
+			let profile = JSON.parse(localStorage.getItem(PROFILE) || 'null');
+			if(!profile){ profile = { fullName: 'Juan Dela Cruz', studentId: '2025-00001-TG-0', course:'BSIT', year:'2nd Year', email:'juan@iskolar.pup.edu.ph', contact:'', emergency:'' , memberSince:'2024' }; localStorage.setItem(PROFILE, JSON.stringify(profile)); }
+
+			// Render profile fields
+			function renderProfile(){
+				qs('#fullName').textContent = profile.fullName;
+				qs('#studentMeta').textContent = profile.studentId + ' • ' + profile.course + ' / ' + profile.year;
+				qs('#p_fullName').value = profile.fullName;
+				qs('#p_studentId').value = profile.studentId;
+				qs('#p_email').value = profile.email;
+				qs('#p_contact').value = profile.contact || '';
+				qs('#p_emergency').value = profile.emergency || '';
+				qs('#memberSince').textContent = profile.memberSince || new Date().getFullYear();
+			}
+
+			// Compute status for an appointment
+			function computeStatus(item){
+				if(item.status) return item.status;
+				const now = todayISO();
+				if(!item.date) return 'Pending Approval';
+				if(item.date < now) return 'Completed';
+				return 'Pending Approval';
+			}
+
+			// Load and render appointments
+			function renderAppointments(){
+				const container = qs('#appointmentsContainer');
+				const history = qs('#historyList');
+				const items = read(KEY);
+				const now = todayISO();
+				let pending=0, upcoming=0, completed=0, cancelled=0;
+				container.innerHTML = '';
+				history.innerHTML = '';
+
+				// sort by date asc
+				items.sort((a,b)=> new Date(a.date+' '+(a.time||'00:00')) - new Date(b.date+' '+(b.time||'00:00')));
+
+				items.forEach(it=>{
+					const s = computeStatus(it);
+					if(s.toLowerCase().includes('pend')) pending++;
+					else if(s.toLowerCase().includes('approve')) upcoming++;
+					else if(s.toLowerCase().includes('complete')) completed++;
+					else if(s.toLowerCase().includes('cancel')) cancelled++;
+
+					// main listing shows non-history (upcoming + pending + approved)
+					const card = document.createElement('div'); card.className='apt-card';
+					card.innerHTML = `
+						<div style="display:flex;justify-content:space-between;align-items:flex-start">
+							<div>
+								<strong style="color:var(--accent)">${escapeHtml(it.service||'Service')}</strong>
+								<div class="small">${escapeHtml(it.name||profile.fullName)}</div>
+							</div>
+							<div style="text-align:right">
+								<div class="apt-meta"><span>${formatDate(it.date)}</span></div>
+								<div class="small">${it.time||''}</div>
+							</div>
+						</div>
+						<div style="color:#555;font-size:13px;margin-top:8px">${escapeHtml(it.notes||'No notes')}</div>
+							<div style="display:flex;gap:8px;margin-top:8px" class="apt-actions">
+								<button data-id="${it.id}" data-action="view" class="btn ghost">View</button>
+								${s.toLowerCase().includes('complete')||s.toLowerCase().includes('cancel')? '': `<button data-id="${it.id}" data-action="request-edit" class="btn">Request Edit</button>`}
+								${s.toLowerCase().includes('cancel')? '' : `<button data-id="${it.id}" data-action="cancel" class="btn ghost">Cancel</button>`}
+								<div style="margin-left:auto;font-weight:700;align-self:center">${s}</div>
+							</div>
+					`;
+
+					// history area: past Completed or Cancelled
+					if(s === 'Completed' || s.toLowerCase().includes('cancel')){
+						const row = document.createElement('div');
+						row.className='small'; row.style.padding='8px 0';
+						row.textContent = `${formatDate(it.date)} — ${it.service} — ${s}`;
+						history.appendChild(row);
+					}
+
+					container.appendChild(card);
+				});
+
+				qs('#pendingCount').textContent = pending;
+				qs('#upcomingCount').textContent = upcoming;
+				qs('#completedCount').textContent = completed;
+				qs('#cancelledCount').textContent = cancelled;
+			}
+
+			// Helpers for formatting and escaping
+			function formatDate(d){ if(!d) return ''; const p=d.split('-'); return p[1]+'/'+p[2]+'/'+p[0]; }
+			function escapeHtml(s){ return String(s||'').replace(/[&<>"]+/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]||c)); }
+
+			// Notifications: render any saved notifications
+			function renderNotifications(){
+				const list = read(NOTIF);
+				const out = qs('#notifications'); out.innerHTML='';
+				if(!list.length) out.innerHTML = '<div class="small">No notifications.</div>';
+				list.forEach(n=>{ const el=document.createElement('div'); el.className='notif'; el.textContent = n; out.appendChild(el); });
+			}
+
+			// Click handler for appointment actions
+			qs('#appointmentsContainer').addEventListener('click', (e)=>{
+				const btn = e.target.closest('button'); if(!btn) return; const id = btn.dataset.id; const action = btn.dataset.action;
+				let items = read(KEY);
+				const idx = items.findIndex(x=>x.id===id); if(idx===-1) return;
+				const item = items[idx];
+				if(action==='view'){
+					alert(`${item.service} — ${formatDate(item.date)} ${item.time}\n\nNotes:\n${item.notes||'No notes'}`);
+				} else if(action==='request-edit'){
+					const suggestion = prompt('Describe the change you want (date/time/notes etc.)');
+					if(!suggestion) return;
+					const reqs = read(EDIT_KEY);
+					reqs.unshift({ id: Date.now().toString(36), appointmentId: item.id, studentId: item.studentId, studentName: item.name, suggested: suggestion, createdAt: new Date().toISOString() });
+					write(EDIT_KEY, reqs);
+					const n = read(NOTIF); n.unshift('Edit request submitted for '+formatDate(item.date)); write(NOTIF, n);
+					alert('Edit request submitted. Clinic staff will review it.');
+					renderNotifications();
+				} else if(action==='cancel'){
+					if(!confirm('Cancel this appointment?')) return;
+					item.status = 'Cancelled'; items[idx] = item; write(KEY, items);
+					// push a notification
+					const n = read(NOTIF); n.unshift('Your appointment on '+formatDate(item.date)+' was cancelled.'); write(NOTIF, n);
+					renderNotifications(); renderAppointments();
+				}
+			});
+
+			// Profile save
+			qs('#saveProfile').addEventListener('click', ()=>{
+				profile.contact = qs('#p_contact').value.trim();
+				profile.emergency = qs('#p_emergency').value.trim();
+				localStorage.setItem(PROFILE, JSON.stringify(profile));
+				alert('Profile saved.'); renderProfile();
+			});
+
+			// Logout button
+			qs('#logoutBtn').addEventListener('click', ()=>{ location.href='homepage_student.html'; });
+
+			// Change password (demo)
+			qs('#changePassword').addEventListener('click', ()=>{ const p = prompt('Enter new password'); if(p) alert('Password changed (demo).'); });
+
+			// bootstrap
+			renderProfile(); renderAppointments(); renderNotifications();
+		</script>
+			<script src="profile.js" defer></script>
+	</body>
+</html>

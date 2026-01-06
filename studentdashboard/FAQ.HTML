@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Student FAQ — Clinic Portal</title>
+    <link rel="stylesheet" href="faq.css" />
+  </head>
+  <body>
+    <!-- Header / hero to match home page style -->
+    <header class="site-header faq-hero">
+      <div class="container header-inner">
+        <div class="header-left">
+          <a class="brand-link" href="bookapp.html">
+            <img src="pup_logo.png" alt="PUP Taguig" class="brand-img" />
+            <span class="brand-text">
+              <span class="brand-title">PUP TAGUIG</span>
+              <span class="brand-subtitle">Online Clinic</span>
+            </span>
+          </a>
+        </div>
+
+        <nav id="main-menu" class="main-nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="bookapp.html">Home</a></li>
+            <li><a href="booking.html">Appointments</a></li>
+            <li><a href="myaccount.html">My Account</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="PUPBG small-hero">
+      <div class="PUPBG-overlay"></div>
+      <div class="container PUPBG-inner">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
+          <div>
+            <p class="kicker">PUP TAGUIG HEALTH SERVICES</p>
+            <h1 class="PUPBG-title" style="font-size:28px">Student FAQ — Clinic Portal</h1>
+            <p class="PUPBG-lead">Quick, accurate answers. Your appointment summary is shown to the right.</p>
+          </div>
+          <div id="appointmentSummary" style="min-width:240px"></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="faq-container" id="faqApp">
+      <header class="faq-header">
+        <div>
+          <h2 style="margin:0">Frequently Asked Questions</h2>
+          <p class="lead">Concise answers to common student questions. Use the search to find an answer fast.</p>
+        </div>
+        <div class="faq-controls">
+          <label class="sr-only" for="faqSearch">Search FAQs</label>
+          <input id="faqSearch" type="search" placeholder="Search FAQs..." aria-label="Search FAQs" />
+        </div>
+      </header>
+
+      <section id="faqCards" class="faq-grid" aria-live="polite">
+        <!-- JS will render category cards and accordions here -->
+      </section>
+    </main>
+
+    <script src="faq.js" type="module"></script>
+  </body>
+</html>

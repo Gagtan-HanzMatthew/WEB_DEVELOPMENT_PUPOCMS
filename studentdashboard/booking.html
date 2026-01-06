@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book Appointment — PUP Taguig Clinic</title>
+    <link rel="stylesheet" href="booking.css" />
+  </head>
+  <body>
+    
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="header-left">
+          <a class="brand-link" href="homepage_student.html">
+            <img src="pup_logo.png" alt="PUP Taguig" class="brand-img" />
+            <span class="brand-text">
+              <span class="brand-title">PUP TAGUIG</span>
+              <span class="brand-subtitle">Online Clinic</span>
+            </span>
+          </a>
+        </div>
+
+        <button class="nav-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="#20343A" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <nav id="main-menu" class="main-nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="homepage_student.html">Home</a></li>
+            <li><a href="booking.html">Appointments</a></li>
+            <li><a href="myaccount.html">My Account</a></li>
+             <li><a href="FAQ.html">FAQ</a></li>
+          </ul>
+        </nav>
+
+        
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Book an Appointment</h1>
+      <p class="small">Fill the form to request a consultation. You can edit or cancel later.</p>
+
+      <div class="page-grid">
+        <section class="card" aria-labelledby="formTitle">
+          <h2 id="formTitle" style="margin-top:0">Appointment Details</h2>
+          <form id="bookingForm" autocomplete="off">
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="name">Full name</label>
+                <input id="name" name="name" required placeholder="e.g. Juan Dela Cruz" />
+              </div>
+              <div class="form-row">
+                <label for="studentId">Student ID</label>
+                <input id="studentId" name="studentId" required placeholder="e.g. 2020-00000-TG-0" />
+              </div>
+              <div class="form-row">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required placeholder="e.g. juan@iskolar.pup.edu.ph" />
+              </div>
+              <!-- Service selection removed per request -->
+              <div class="form-row">
+                <label for="date">Date</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+              <div class="form-row">
+                <label for="time">Time</label>
+               <input id="time" name="time" type="time" required min="08:00" max="19:00" />
+              </div>
+              <div style="grid-column:1 / -1" class="form-row">
+                <label for="notes">Notes (optional)</label>
+                <textarea id="notes" name="notes" placeholder="Brief description of your concern..."></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="reset" class="btn ghost" id="resetBtn" type="button">Clear</button>
+              <button type="submit" class="btn" id="saveBtn">Save Appointment</button>
+            </div>
+
+            <input type="hidden" id="editingId" value="" />
+          </form>
+        </section>
+
+        <aside>
+          <div class="card">
+            <h3 style="margin-top:0">Upcoming Appointments</h3>
+            <div id="appointmentsList" class="app-list" aria-live="polite">
+              </div>
+            <p id="noMsg" class="small" style="display:none;margin-top:8px">No appointments scheduled.</p>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="card">
+            <h4 style="margin-top:0">Notes</h4>
+            <p class="small">Appointments are stored in your browser (Local Storage) for this demo.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script src="booking.js"></script>
+  </body>
+</html>
