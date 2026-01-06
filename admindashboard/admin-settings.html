@@ -6,72 +6,11 @@
 <title>PUPT Clinic — Settings</title>
 
 <style>
-/* Main */
-.main{flex:1;padding:28px}
-
-/* Cards */
-.card{
-  background:var(--card);
-  border-radius:14px;
-  padding:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.06);
-  margin-bottom:22px;
-}
-.card h3{margin-top:0}
-
-/* Form */
-.form-group{
-  margin-bottom:14px;
-}
-label{
-  display:block;
-  font-weight:700;
-  margin-bottom:6px;
-}
-input,select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
-.switch{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:6px;
-}
-.switch input{width:auto}
-
-/* Buttons */
-.actions{
-  display:flex;
-  gap:12px;
-  margin-top:16px;
-}
-.btn{
-  padding:12px 18px;
-  border-radius:10px;
-  border:none;
-  font-weight:800;
-  cursor:pointer;
-}
-.btn-save{
-  background:var(--accent);
-  color:#fff;
-}
-.btn-reset{
-  background:#ddd;
-}
-
-/* Responsive */
-@media(max-width:800px){
-  .layout{flex-direction:column}
-  .sidebar{width:100%}
-}
 :root{
   --accent:#ff5a4d;
   --bg:#f3f6f5;
   --dark:#0f1b26;
+  --pup-maroon: #70131B; /* PUP Maroon */
   --text:#243437;
   --card:#ffffff;
 }
@@ -84,34 +23,79 @@ body{
   color:var(--text);
 }
 
+/* --- SHARED ADMIN STYLES (Header/Sidebar) --- */
+
 /* Header */
 .admin-header{
   background:#fff;
   border-bottom:1px solid #eee;
-  padding:12px 24px;
+  padding:16px 24px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:24px;
 }
-.admin-brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:800;
-  color:var(--accent);
-}
-.admin-brand img{
-  width:42px;
-  height:42px;
-  border-radius:50%;
+.search-bar{
+  flex:1;
+  max-width:400px;
+  visibility: hidden; /* Hidden on settings page but keeps layout */
 }
 .admin-user{
-  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  position:relative;
 }
-.admin-user a{
-  color:var(--accent);
+.user-avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+}
+.user-dropdown{
+  display:none;
+  position:absolute;
+  top:100%;
+  right:0;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  margin-top:8px;
+  z-index:100;
+}
+.user-dropdown.show{
+  display:block;
+}
+.user-dropdown a,
+.user-dropdown button{
+  display:block;
+  width:100%;
+  padding:12px 16px;
+  border:none;
+  background:none;
+  text-align:left;
+  color:var(--text);
+  cursor:pointer;
+  font-size:14px;
+  border-bottom:1px solid #f0f0f0;
   text-decoration:none;
-  margin-left:12px;
+}
+.user-dropdown a:last-child,
+.user-dropdown button:last-child{
+  border-bottom:none;
+}
+.user-dropdown a:hover,
+.user-dropdown button:hover{
+  background:#f9f9f9;
+  color:var(--accent);
 }
 
 /* Layout */
@@ -123,28 +107,78 @@ body{
 /* Sidebar */
 .sidebar{
   width:240px;
-  background:var(--dark);
-  color:#cfd9df;
+  background: var(--pup-maroon); /* PUP Maroon Background */
+  color:#ffffff;
   padding:20px;
 }
-.sidebar h4{
+.sidebar-logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+.sidebar-logo img{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background: #fff;
+  padding: 2px;
+}
+.sidebar-logo-text{
+  flex:1;
+}
+.sidebar-logo-title{
   color:#fff;
-  margin:0 0 16px;
+  font-weight:800;
+  font-size:14px;
+  margin:0;
+  line-height:1.2;
+}
+.sidebar-logo-sub{
+  color:#e0e0e0;
+  font-size:11px;
+  margin:2px 0 0;
+}
+.sidebar h4{
+  color:#ffc107; /* Gold Header */
+  margin:16px 0 12px;
+  font-size:11px;
+  letter-spacing:0.8px;
+  text-transform:uppercase;
+}
+.sidebar-nav{
+  list-style:none;
+  padding:0;
+  margin:0;
 }
 .sidebar a{
-  display:block;
+  display:flex;
+  align-items:center;
+  gap:12px;
   padding:10px 12px;
   border-radius:8px;
-  color:#cfd9df;
+  color:#f0f0f0;
   text-decoration:none;
   margin-bottom:6px;
   font-weight:600;
+  transition:all 0.2s ease;
 }
 .sidebar a:hover,
 .sidebar a.active{
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.15);
   color:#fff;
 }
+.sidebar-icon{
+  font-size:18px;
+  width:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* --- SETTINGS SPECIFIC STYLES --- */
 
 /* Main */
 .main{
@@ -152,149 +186,181 @@ body{
   padding:28px;
 }
 
-/* Dashboard Cards */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-bottom:28px;
-}
-.stat-card{
-  background:var(--card);
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.06);
-}
-.stat-card h3{
-  margin:0;
-  font-size:26px;
-  color:var(--accent);
-}
-.stat-card p{
-  margin:6px 0 0;
-  color:#6b7b7d;
-  font-weight:600;
-}
-
-/* Table */
+/* Cards */
 .card{
   background:var(--card);
   border-radius:14px;
-  padding:20px;
+  padding:22px;
   box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  margin-bottom:22px;
 }
-.card h3{
-  margin-top:0;
-}
+.card h3{margin-top:0; color: var(--pup-maroon);}
 
-table{
+/* Form */
+.form-group{
+  margin-bottom:14px;
+}
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+  font-size: 14px;
+}
+input,select{
   width:100%;
-  border-collapse:collapse;
-  margin-top:12px;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  font-size: 14px;
 }
-th,td{
-  text-align:left;
-  padding:12px;
-  border-bottom:1px solid #eee;
-  font-size:14px;
+input:disabled{
+  background: #f9f9f9;
+  color: #666;
 }
-th{
-  background:#f9fbfb;
-  font-weight:700;
+.switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:6px;
+  padding: 8px 0;
 }
+.switch input{width:auto}
 
-.status{
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
+/* Buttons */
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
 }
-.pending{background:#fff3cd;color:#856404}
-.approved{background:#d4edda;color:#155724}
-.cancelled{background:#f8d7da;color:#721c24}
-
 .btn{
-  padding:6px 12px;
-  border-radius:6px;
+  padding:10px 18px;
+  border-radius:8px;
   border:none;
   font-weight:700;
   cursor:pointer;
+  transition: all 0.2s;
 }
-.btn-approve{background:#28a745;color:#fff}
-.btn-cancel{background:#dc3545;color:#fff}
+.btn-save{
+  background:var(--pup-maroon);
+  color:#fff;
+}
+.btn-save:hover{
+  background:#5a0f15;
+}
+.btn-reset{
+  background:#e0e0e0;
+  color: #333;
+}
+.btn-reset:hover{
+  background:#d0d0d0;
+}
+
+/* Modal */
+.modal{
+  display:none; 
+  position:fixed; 
+  inset:0; 
+  background:rgba(0,0,0,0.5); 
+  z-index: 1000;
+  justify-content:center; 
+  align-items:center;
+}
+.modal-content{
+  background:#fff; 
+  padding:24px; 
+  border-radius:14px; 
+  width:90%; 
+  max-width:400px; 
+  position:relative;
+}
+.modal-content h3{ margin-top:0; color: var(--pup-maroon); }
 
 /* Responsive */
-@media (max-width:1000px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:600px){
+@media(max-width:800px){
   .admin-layout{flex-direction:column}
   .sidebar{width:100%}
-  .stats{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Header -->
 <header class="admin-header">
-  <div class="admin-brand">
-    <img src="pup_logo.png" alt="PUP Taguig">
-    PUP TAGUIG — SETTINGS
-  </div>
+  <div class="search-bar">
+    </div>
   <div class="admin-user">
-    <a href="#">Logout</a>
+    <div class="user-avatar" id="userAvatar">A</div>
+    <div class="user-dropdown" id="userDropdown">
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 </header>
 
-<!-- Layout -->
 <div class="admin-layout">
 
-
   <aside class="sidebar">
-    <h4>Admin Panel</h4>
-   <a href="admin-dashboard.html" ">Dashboard</a>
-    <a href="admin-inventory.html">Inventory</a>
-    <a href="admin-appointments.html">Appointments</a>
-    <a href="admin-reports.html">Reports</a>
-    <a href="admin-settings.html"class="active">Settings</a>
+    <div class="sidebar-logo">
+      <img src="../pup_logo.png" alt="PUP Taguig">
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">PUP TAGUIG</div>
+        <div class="sidebar-logo-sub">Clinic</div>
+      </div>
+    </div>
+    
+    <h4>Menu</h4>
+    <nav class="sidebar-nav">
+      <a href="admin-dashboard.html">
+        <span class="sidebar-icon">🏠</span>
+        Dashboard
+      </a>
+      <a href="admin-appointments.html">
+        <span class="sidebar-icon">📅</span>
+        Appointments
+      </a>
+      <a href="admin-inventory.html">
+        <span class="sidebar-icon">📦</span>
+        Inventory
+      </a>
+      <a href="admin-reports.html">
+        <span class="sidebar-icon">📊</span>
+        Reports
+      </a>
+      <a href="admin-settings.html" class="active">
+        <span class="sidebar-icon">⚙️</span>
+        Settings
+      </a>
+    </nav>
   </aside>
 
   <main class="main">
 
-    <!-- Admin Profile -->
-<section class="card">
-  <h3>Admin Profile</h3>
+    <section class="card">
+      <h3>Admin Profile</h3>
 
-  <div class="form-group">
-    <label>Admin Name</label>
-    <input type="text" id="adminName" disabled>
-  </div>
+      <div class="form-group">
+        <label>Admin Name</label>
+        <input type="text" id="adminNameDisplay" disabled>
+      </div>
 
-  <div class="form-group">
-    <label>Email</label>
-    <input type="email" id="adminEmail" disabled>
-  </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="adminEmailDisplay" disabled>
+      </div>
 
-  <div class="actions">
-  
-    <button class="btn btn-reset" onclick="openProfileModal()">Edit Profile</button>
+      <div class="actions">
+        <button class="btn btn-reset" onclick="openProfileModal()">Edit Profile</button>
+      </div>
+    </section>
 
-  </div>
-</section>
-
-
-    <!-- Clinic Info -->
     <section class="card">
       <h3>Clinic Information</h3>
 
       <div class="form-group">
         <label>Clinic Name</label>
-        <input type="text" id="clinicName" placeholder="Online Clinic Management System" disabled>
+        <input type="text" id="clinicName" placeholder="PUP Taguig Clinic" disabled>
       </div>
-
-      
 
       <div class="form-group">
         <label>Location</label>
@@ -302,7 +368,6 @@ th{
       </div>
     </section>
 
-    <!-- Clinic Hours -->
     <section class="card">
       <h3>Clinic Hours</h3>
 
@@ -317,7 +382,6 @@ th{
       </div>
     </section>
 
-    <!-- System Preferences -->
     <section class="card">
       <h3>System Preferences</h3>
 
@@ -332,7 +396,6 @@ th{
       </div>
     </section>
 
-    <!-- Actions -->
     <div class="actions">
       <button class="btn btn-save" onclick="saveSettings()">Save Settings</button>
       <button class="btn btn-reset" onclick="resetSettings()">Reset</button>
@@ -341,13 +404,66 @@ th{
   </main>
 </div>
 
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <h3>Edit Profile</h3>
+
+    <div class="form-group">
+      <label>Admin Name</label>
+      <input type="text" id="modalAdminName">
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="modalAdminEmail">
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="text" id="modalAdminPhonenumber">
+    </div>
+
+    <div class="form-group">
+      <label>New Password</label>
+      <input type="password" id="modalAdminPassword">
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" id="modalAdminConfirmPassword">
+    </div>
+
+    <div class="actions" style="justify-content: flex-end;">
+      <button class="btn btn-reset" onclick="closeProfileModal()">Cancel</button>
+      <button class="btn btn-save" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <script>
+// --- SHARED HEADER JS ---
+document.getElementById('userAvatar').addEventListener('click', function(){
+  const dropdown = document.getElementById('userDropdown');
+  dropdown.classList.toggle('show');
+});
+
+document.addEventListener('click', function(e){
+  const userSection = document.querySelector('.admin-user');
+  if(!userSection.contains(e.target)){
+    document.getElementById('userDropdown').classList.remove('show');
+  }
+});
+
+function logout(){
+  alert('Logging out...');
+  location.href = '../landingpage.html';
+}
+
+// --- SETTINGS LOGIC ---
+
 const defaultSettings = {
-  adminName:"",
-  adminEmail:"",
   clinicName:"PUP Taguig Clinic",
-  clinicContact:"",
-  clinicLocation:"",
+  clinicLocation:"Santos Ave, Lower Bicutan, Taguig City, Metro Manila",
   openTime:"08:00",
   closeTime:"17:00",
   emailNotif:true,
@@ -357,26 +473,22 @@ const defaultSettings = {
 function loadSettings(){
   const s = JSON.parse(localStorage.getItem("settings")) || defaultSettings;
 
-  clinicName.value = s.clinicName;
-  clinicContact.value = s.clinicContact;
-  clinicLocation.value = s.clinicLocation;
-  openTime.value = s.openTime;
-  closeTime.value = s.closeTime;
-  emailNotif.checked = s.emailNotif;
-  autoApprove.checked = s.autoApprove;
+  document.getElementById("clinicName").value = s.clinicName;
+  document.getElementById("clinicLocation").value = s.clinicLocation;
+  document.getElementById("openTime").value = s.openTime;
+  document.getElementById("closeTime").value = s.closeTime;
+  document.getElementById("emailNotif").checked = s.emailNotif;
+  document.getElementById("autoApprove").checked = s.autoApprove;
 }
 
 function saveSettings(){
   const s = {
-    adminName:adminName.value,
-    adminEmail:adminEmail.value,
-    clinicName:clinicName.value,
-    clinicContact:clinicContact.value,
-    clinicLocation:clinicLocation.value,
-    openTime:openTime.value,
-    closeTime:closeTime.value,
-    emailNotif:emailNotif.checked,
-    autoApprove:autoApprove.checked
+    clinicName: document.getElementById("clinicName").value,
+    clinicLocation: document.getElementById("clinicLocation").value,
+    openTime: document.getElementById("openTime").value,
+    closeTime: document.getElementById("closeTime").value,
+    emailNotif: document.getElementById("emailNotif").checked,
+    autoApprove: document.getElementById("autoApprove").checked
   };
   localStorage.setItem("settings", JSON.stringify(s));
   alert("Settings saved successfully!");
@@ -389,34 +501,32 @@ function resetSettings(){
   }
 }
 
-loadSettings();
-function saveProfile(){
-  const profile = {
-    name: adminName.value,
-    email: adminEmail.value
-  };
+// --- PROFILE LOGIC ---
 
-  // Save to localStorage
-  localStorage.setItem("adminProfile", JSON.stringify(profile));
-  alert("Admin profile updated successfully!");
-}
-
-// Load profile on page load
 function loadProfile(){
-  const profile = JSON.parse(localStorage.getItem("adminProfile")) || {name:"Admin User", email:"admin@pup.edu.ph"};
-  adminName.value = profile.name;
-  adminEmail.value = profile.email;
+  const profile = JSON.parse(localStorage.getItem("adminProfile")) || {
+    name:"Admin User", 
+    email:"admin@pup.edu.ph",
+    phone: "09123456789"
+  };
+  document.getElementById("adminNameDisplay").value = profile.name;
+  document.getElementById("adminEmailDisplay").value = profile.email;
 }
 
-// Initialize
-loadProfile();
-
-
-// para sa modal sa view full profile
 function openProfileModal() {
-  const profile = JSON.parse(localStorage.getItem("adminProfile")) || {name:"Admin User", email:"admin@pup.edu.ph"};
-  document.getElementById("modalAdminName").textContent = profile.name;
-  document.getElementById("modalAdminEmail").textContent = profile.email;
+  const profile = JSON.parse(localStorage.getItem("adminProfile")) || {
+    name:"Admin User", 
+    email:"admin@pup.edu.ph",
+    phone: ""
+  };
+  
+  // Populate modal fields
+  document.getElementById("modalAdminName").value = profile.name;
+  document.getElementById("modalAdminEmail").value = profile.email;
+  document.getElementById("modalAdminPhonenumber").value = profile.phone || "";
+  document.getElementById("modalAdminPassword").value = "";
+  document.getElementById("modalAdminConfirmPassword").value = "";
+
   document.getElementById("profileModal").style.display = "flex";
 }
 
@@ -424,47 +534,37 @@ function closeProfileModal() {
   document.getElementById("profileModal").style.display = "none";
 }
 
+function saveProfile(){
+  const name = document.getElementById("modalAdminName").value;
+  const email = document.getElementById("modalAdminEmail").value;
+  const phone = document.getElementById("modalAdminPhonenumber").value;
+  const pass = document.getElementById("modalAdminPassword").value;
+  const confirmPass = document.getElementById("modalAdminConfirmPassword").value;
+
+  if(pass && pass !== confirmPass){
+    alert("Passwords do not match!");
+    return;
+  }
+
+  const profile = {
+    name: name,
+    email: email,
+    phone: phone
+  };
+
+  localStorage.setItem("adminProfile", JSON.stringify(profile));
+  
+  // Update main display
+  loadProfile();
+  closeProfileModal();
+  alert("Admin profile updated successfully!");
+}
+
+// Initialize
+loadSettings();
+loadProfile();
 
 </script>
 
 </body>
-
-
-<!-- Profile Modal -->
-<div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-  <div style="background:#fff; padding:20px; border-radius:14px; width:350px; position:relative;">
-    <h3>Admin Profile</h3>
-
-  <div class="form-group">
-    <label>Admin Name</label>
-    <input type="text" id="modalAdminName">
-  </div>
-
-  <div class="form-group">
-    <label>Email</label>
-    <input type="email" id="modalAdminEmail">
-  </div>
-
-   <div class="form-group">
-    <label>Phone Number</label>
-    <input type="text" id="modalAdminPhonenumber">
-  </div>
-
-   <div class="form-group">
-    <label>Password</label>
-    <input type="password" id="modalAdminPassword">
-  </div>
-
-   <div class="form-group">
-    <label>Confirm Password</label>
-    <input type="password" id="modalAdminPassword">
-  </div>
-
-  
-    <button class="btn btn-save" onclick="saveProfile()">Save Profile</button>
-    <button onclick="closeProfileModal()" style="margin-top:12px; padding:8px 14px; border:none; border-radius:8px; background:#ff5a4d; color:#fff; cursor:pointer;">Close</button>
-  </div>
-</div>
-
-
 </html>

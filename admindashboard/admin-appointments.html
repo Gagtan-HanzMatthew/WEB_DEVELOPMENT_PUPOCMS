@@ -9,7 +9,8 @@
 :root{
   --accent:#ff5a4d;
   --bg:#f3f6f5;
-  --dark:#0f1b26;
+  --dark:#0f1b26; 
+  --pup-maroon: #70131B; /* Added PUP Maroon Variable */
   --text:#243437;
   --card:#ffffff;
 }
@@ -26,30 +27,88 @@ body{
 .admin-header{
   background:#fff;
   border-bottom:1px solid #eee;
-  padding:12px 24px;
+  padding:16px 24px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:24px;
 }
 .admin-brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:800;
-  color:var(--accent);
+  display:none;
 }
-.admin-brand img{
-  width:42px;
-  height:42px;
-  border-radius:50%;
+.search-bar{
+  flex:1;
+  max-width:400px;
+}
+.search-bar input{
+  width:100%;
+  padding:10px 16px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:14px;
+  background:#f9f9f9;
+}
+.search-bar input:focus{
+  outline:none;
+  border-color:var(--accent);
+  background:#fff;
 }
 .admin-user{
-  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  position:relative;
 }
-.admin-user a{
-  color:var(--accent);
+.user-avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+}
+.user-dropdown{
+  display:none;
+  position:absolute;
+  top:100%;
+  right:0;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  margin-top:8px;
+  z-index:100;
+}
+.user-dropdown.show{
+  display:block;
+}
+.user-dropdown a,
+.user-dropdown button{
+  display:block;
+  width:100%;
+  padding:12px 16px;
+  border:none;
+  background:none;
+  text-align:left;
+  color:var(--text);
+  cursor:pointer;
+  font-size:14px;
+  border-bottom:1px solid #f0f0f0;
   text-decoration:none;
-  margin-left:12px;
+}
+.user-dropdown a:last-child,
+.user-dropdown button:last-child{
+  border-bottom:none;
+}
+.user-dropdown a:hover,
+.user-dropdown button:hover{
+  background:#f9f9f9;
+  color:var(--accent);
 }
 
 /* Layout */
@@ -61,27 +120,75 @@ body{
 /* Sidebar */
 .sidebar{
   width:240px;
-  background:var(--dark);
-  color:#cfd9df;
+  background: var(--pup-maroon); /* CHANGED TO MAROON */
+  color:#ffffff; /* CHANGED TO WHITE for contrast */
   padding:20px;
 }
-.sidebar h4{
+.sidebar-logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.2); /* Lightened border */
+}
+.sidebar-logo img{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background: #fff; /* Added bg to logo for visibility */
+  padding: 2px;
+}
+.sidebar-logo-text{
+  flex:1;
+}
+.sidebar-logo-title{
   color:#fff;
-  margin:0 0 16px;
+  font-weight:800;
+  font-size:14px;
+  margin:0;
+  line-height:1.2;
+}
+.sidebar-logo-sub{
+  color:#e0e0e0;
+  font-size:11px;
+  margin:2px 0 0;
+}
+.sidebar h4{
+  color:#ffc107; /* Changed to Gold/Yellow for PUP theme contrast */
+  margin:16px 0 12px;
+  font-size:11px;
+  letter-spacing:0.8px;
+  text-transform:uppercase;
+}
+.sidebar-nav{
+  list-style:none;
+  padding:0;
+  margin:0;
 }
 .sidebar a{
-  display:block;
+  display:flex;
+  align-items:center;
+  gap:12px;
   padding:10px 12px;
   border-radius:8px;
-  color:#cfd9df;
+  color:#f0f0f0;
   text-decoration:none;
   margin-bottom:6px;
   font-weight:600;
+  transition:all 0.2s ease;
 }
 .sidebar a:hover,
 .sidebar a.active{
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.15); /* Slightly lighter hover */
   color:#fff;
+}
+.sidebar-icon{
+  font-size:18px;
+  width:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 /* Main */
@@ -106,7 +213,7 @@ body{
 .stat-card h3{
   margin:0;
   font-size:26px;
-  color:var(--accent);
+  color:var(--pup-maroon); /* Updated to match theme */
 }
 .stat-card p{
   margin:6px 0 0;
@@ -139,17 +246,46 @@ th,td{
 th{
   background:#f9fbfb;
   font-weight:700;
+  color:var(--text);
+}
+tbody tr:nth-child(even){
+  background:#f9fbfb;
+}
+tbody tr:hover{
+  background:#f0f8ff;
 }
 
 .status{
+  display:inline-block;
   padding:6px 12px;
-  border-radius:999px;
+  border-radius:12px;
   font-size:12px;
   font-weight:700;
 }
-.pending{background:#fff3cd;color:#856404}
-.approved{background:#d4edda;color:#155724}
-.cancelled{background:#f8d7da;color:#721c24}
+.status.pending{background:#fef3cd;color:#856404}
+.status.approved{background:#d4edda;color:#155724}
+.status.cancelled{background:#f8d7da;color:#721c24}
+
+.table-actions{
+  display:flex;
+  gap:6px;
+}
+.btn-action{
+  padding:4px 8px;
+  border-radius:4px;
+  border:1px solid #ddd;
+  background:#fff;
+  color:var(--text);
+  cursor:pointer;
+  font-size:12px;
+  font-weight:600;
+  transition:all 0.2s;
+}
+.btn-action:hover{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
 
 .btn{
   padding:6px 12px;
@@ -174,7 +310,6 @@ th{
 </style>
 </head>
 
-<!-- Client Info Modal -->
 <div id="clientModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center;">
   <div style="background:#fff; padding:24px; border-radius:12px; max-width:400px; width:90%; position:relative;">
     <h3>Client Information</h3>
@@ -184,44 +319,67 @@ th{
     <p><strong>Time:</strong> <span id="modalTime"></span></p>
     <p><strong>Status:</strong> <span id="modalStatus"></span></p>
     <p><strong>Additional Notes:</strong> <span id="modalNotes"></span></p>
-    <button onclick="closeModal()" style="margin-top:12px; padding:6px 12px; border:none; background:#ff5a4d; color:#fff; border-radius:6px;">Close</button>
+    <button onclick="closeModal()" style="margin-top:12px; padding:6px 12px; border:none; background:#70131B; color:#fff; border-radius:6px;">Close</button>
   </div>
 </div>
 
 <body>
 
-<!-- Header -->
 <header class="admin-header">
-  <div class="admin-brand">
-    <img src="pup_logo.png" alt="PUP Taguig">
-    PUP TAGUIG — APPOINTMENTS
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search Student ID..." />
   </div>
   <div class="admin-user">
-
-    <a href="#">Logout</a>
+    <div class="user-avatar" id="userAvatar">A</div>
+    <div class="user-dropdown" id="userDropdown">
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 </header>
 
-<!-- Layout -->
 <div class="admin-layout">
 
-  <!-- Sidebar -->
   <aside class="sidebar">
-    <h4>Admin Panel</h4>
-    <a href="admin-dashboard.html">Dashboard</a>
-    <a href="admin-inventory.html">Inventory</a>
-    <a href="admin-appointments.html" class="active">Appointments</a>
-    <a href="admin-reports.html">Reports</a>
-    <a href="admin-settings.html">Settings</a>
+    <div class="sidebar-logo">
+      <img src="../pup_logo.png" alt="PUP Taguig">
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">PUP TAGUIG</div>
+        <div class="sidebar-logo-sub">Clinic</div>
+      </div>
+    </div>
+    
+    <h4>Menu</h4>
+    <nav class="sidebar-nav">
+      <a href="admin-dashboard.html">
+        <span class="sidebar-icon">🏠</span>
+        Dashboard
+      </a>
+      <a href="admin-appointments.html" class="active">
+        <span class="sidebar-icon">📅</span>
+        Appointments
+      </a>
+      <a href="admin-inventory.html">
+        <span class="sidebar-icon">📦</span>
+        Inventory
+      </a>
+      <a href="admin-reports.html">
+        <span class="sidebar-icon">📊</span>
+        Reports
+      </a>
+      <a href="admin-settings.html">
+        <span class="sidebar-icon">⚙️</span>
+        Settings
+      </a>
+    </nav>
   </aside>
 
-  <!-- Main -->
   <main class="main">
 
    
 
-     <!-- Appointments Table -->
-    <section class="card">
+      <section class="card">
       <h4> Appointments</h4>
 
       <table>
@@ -319,6 +477,36 @@ function viewInfo(id){
 function closeModal(){
   document.getElementById("clientModal").style.display = "none";
 }
+
+// User avatar click handler
+document.getElementById('userAvatar').addEventListener('click', function(){
+  const dropdown = document.getElementById('userDropdown');
+  dropdown.classList.toggle('show');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e){
+  const userSection = document.querySelector('.admin-user');
+  if(!userSection.contains(e.target)){
+    document.getElementById('userDropdown').classList.remove('show');
+  }
+});
+
+// Logout function
+function logout(){
+  alert('Logging out...');
+  location.href = '../landingpage.html';
+}
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function(e){
+  const searchTerm = e.target.value.toLowerCase();
+  const rows = document.querySelectorAll('table tbody tr');
+  rows.forEach(row => {
+    const studentName = row.cells[0]?.textContent.toLowerCase() || '';
+    row.style.display = studentName.includes(searchTerm) ? '' : 'none';
+  });
+});
 
 // Initial render
 renderAppointments();

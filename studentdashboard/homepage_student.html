@@ -7,7 +7,8 @@
     <style>
 /* Basic reset and variables */
 :root{
-  --accent:#8B0000;
+  --accent:#8B0000; /* Standard Maroon */
+  --accent-dark:#600000; /* Deep Maroon for Header */
   --muted:#f3f6f5;
   --text:#222;
   --card-bg:#ffffff;
@@ -30,24 +31,60 @@ body{
 .top-actions a{margin-left:12px;text-decoration:none;color:var(--accent)}
 .top-actions .btn-outline{padding:6px 10px;border:1px solid var(--accent);border-radius:6px}
 
-/* Header */
-.site-header{background:#fff;position:sticky;top:0;z-index:60;box-shadow:0 6px 20px rgba(16,24,28,0.06)}
+/* Header - UPDATED to Dark Maroon */
+.site-header{
+    background: var(--accent-dark); /* Changed from white to Dark Maroon */
+    position:sticky;
+    top:0;
+    z-index:60;
+    box-shadow:0 6px 20px rgba(0,0,0,0.2); /* Slightly darker shadow */
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:16px}
 .brand-link{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand-img{width:48px;height:48px;object-fit:cover;border-radius:50%}
-.brand-text{font-weight:800;color:var(--accent);letter-spacing:0.6px}
+.brand-img{width:48px;height:48px;object-fit:cover;border-radius:50%; border: 2px solid rgba(255,255,255,0.2);} /* Added border to logo */
 
-/* Modern brand in header */
+/* Modern brand in header - UPDATED Text Colors */
 .brand-text{display:flex;flex-direction:column;line-height:1}
-.brand-title{font-weight:900;font-size:18px;letter-spacing:0.6px;background:linear-gradient(90deg,var(--accent),#ff8b6f);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand-subtitle{font-size:11px;color:#6b7b7d;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
-/* Nav */
+.brand-title{
+    font-weight:900;
+    font-size:18px;
+    letter-spacing:0.5px;
+    color: #ffffff; /* White text */
+}
+
+.brand-subtitle{
+    font-size:11px;
+    color: #e0e0e0; /* Light gray text */
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-top:2px;
+}
+
+/* Nav - UPDATED Links to White */
 .nav-toggle{display:none;background:transparent;border:0;padding:8px;border-radius:8px}
-.main-nav{display:flex;align-items:center;gap:18px}
-.nav-list{display:flex;gap:18px;list-style:none;margin:0;padding:0}
-.nav-list a{color:#2f454b;text-decoration:none;padding:10px 6px;border-radius:6px;display:inline-block}
-.nav-list a:hover,.nav-list a:focus{background:rgba(15,27,38,0.04);color:#15222a}
+
+/* Ensure hamburger icon is white on mobile */
+.nav-toggle svg path { stroke: #ffffff; }
+
+.main-nav{display:flex;align-items:center}
+.nav-list{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+
+.nav-list a{
+    color: #ffffff; /* White text */
+    text-decoration:none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.nav-list a:hover{
+    opacity: 0.8;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
 
 .header-actions{display:flex;align-items:center;gap:12px}
 .login-link{color:#51636b;text-decoration:none;font-weight:600}
@@ -55,13 +92,28 @@ body{
 
 /* Mobile styles */
 @media (max-width:900px){
-  .nav-list{display:none;flex-direction:column;background:#fff;position:absolute;left:0;right:0;top:68px;padding:14px 20px;border-bottom:1px solid rgba(0,0,0,0.06)}
+  /* Keep mobile dropdown white for readability */
+  .nav-list{
+      display:none;
+      flex-direction:column;
+      background:#fff; 
+      position:absolute;
+      left:0;
+      right:0;
+      top:73px; /* Adjusted for header height */
+      padding:14px 20px;
+      border-bottom:1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  /* Reset link colors for the white mobile dropdown */
+  .nav-list a { color: #333; }
+  .nav-list a:hover { background: #f0f0f0; color: var(--accent); }
+
   .nav-list.show{display:flex}
   .nav-toggle{display:inline-flex}
   .brand-text{display:none}
 }
-.main-nav a{display:inline-flex;align-items:center;gap:8px;color:#51636b}
-.nav-icon{font-size:16px;opacity:0.9}
 
 /* topbar register button tweak to match reference */
 .top-actions .btn-outline{padding:6px 10px;border-radius:6px;background:var(--accent);color:#fff;border:none}
@@ -189,7 +241,6 @@ body{
   <body>
 
 
-      <!-- appointment / calendar -->
       <symbol id="icon-appointment" viewBox="0 0 24 24">
         <rect x="2" y="4" width="20" height="18" rx="2" fill="#ffefee"></rect>
         <path d="M7 2v4M17 2v4" stroke="#ff6b5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -197,7 +248,6 @@ body{
         <rect x="6" y="13" width="5" height="5" rx="1" fill="#ffd6d1" />
       </symbol>
 
-      <!-- consultation / user plus -->
       <symbol id="icon-consult" viewBox="0 0 24 24">
         <circle cx="9" cy="8" r="3" fill="#e6f7f8" />
         <path d="M2 20c1.5-3 5-5 9-5s7.5 2 9 5" fill="#e6f7f8" />
@@ -205,20 +255,17 @@ body{
         <path d="M16 10h6" stroke="#4aa0a8" stroke-width="1.6" stroke-linecap="round"/>
       </symbol>
 
-      <!-- mental health / chat -->
       <symbol id="icon-mental" viewBox="0 0 24 24">
         <rect x="2" y="3" width="20" height="14" rx="2" fill="#eef7ff" />
         <path d="M8 21l3-3h7" stroke="#5b8df0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
 
-      <!-- certificate / document -->
       <symbol id="icon-certificate" viewBox="0 0 24 24">
         <rect x="3" y="2" width="14" height="20" rx="2" fill="#fff7ea" />
         <path d="M17 8h3v10h-3z" fill="#ffe6c8" />
         <path d="M7 7h6M7 11h6M7 15h4" stroke="#ffb36a" stroke-width="1.4" stroke-linecap="round"/>
       </symbol>
     </svg>
-    <!-- Header / Modern Nav -->
     <header class="site-header">
       <div class="container header-inner">
         <div class="header-left">
@@ -238,9 +285,9 @@ body{
         <nav id="main-menu" class="main-nav" role="navigation">
           <ul class="nav-list">
             <li><a href="homepage_student.html">Home</a></li>
-            <li><a href="#">About</a></li>
             <li><a href="booking.html">Appointments</a></li>
             <li><a href="myaccount.html">My Account</a></li>
+             <li><a href="FAQ.html">FAQ</a></li>
           </ul>
         </nav>
 
@@ -248,7 +295,6 @@ body{
       </div>
     </header>
 
-    <!-- Hero -->
     <section class="PUPBG">
       <div class="PUPBG-overlay"></div>
       <div class="container PUPBG-inner">
@@ -256,7 +302,6 @@ body{
         <h1 class="PUPBG-title">Your Health, Our Priority</h1>
         <p class="PUPBG-lead">Access quality healthcare services online, anytime, anywhere.</p>
 
-        <!-- ===== replaced hero actions: open booking page and quick link to appointments ===== -->
         <div class="hero-actions">
           <a href="booking.html" class="btn btn-primary">Book Appointment</a>
           <a href="viewappointment.html" class="btn btn-secondary">View Appointments</a>
@@ -265,7 +310,6 @@ body{
     </section>
 
     
-    <!-- Welcome section -->
     <section class="welcome">
       <div class="container welcome-inner">
         <div class="welcome-text">
@@ -282,7 +326,6 @@ body{
       </div>
     </section>
 
-    <!-- Comments / Testimonials gallery (cards) -->
     <section class="comments-section">
       <div class="container">
         <div class="section-head">
