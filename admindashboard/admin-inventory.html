@@ -1,0 +1,483 @@
+<style>
+:root{
+  --accent:#ff5a4d;
+  --bg:#f3f6f5;
+  --dark:#0f1b26;
+  --text:#243437;
+  --card:#ffffff;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Header */
+.admin-header{
+  background:#fff;
+  border-bottom:1px solid #eee;
+  padding:12px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.admin-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  color:var(--accent);
+}
+.admin-brand img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+.admin-user{
+  font-weight:600;
+}
+.admin-user a{
+  color:var(--accent);
+  text-decoration:none;
+  margin-left:12px;
+}
+
+/* Layout */
+.admin-layout{
+  display:flex;
+  min-height:calc(100vh - 66px);
+}
+
+/* Sidebar */
+.sidebar{
+  width:240px;
+  background:var(--dark);
+  color:#cfd9df;
+  padding:20px;
+}
+.sidebar h4{
+  color:#fff;
+  margin:0 0 16px;
+}
+.sidebar a{
+  display:block;
+  padding:10px 12px;
+  border-radius:8px;
+  color:#cfd9df;
+  text-decoration:none;
+  margin-bottom:6px;
+  font-weight:600;
+}
+.sidebar a:hover,
+.sidebar a.active{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+/* Main */
+.main{
+  flex:1;
+  padding:28px;
+}
+
+/* Dashboard Cards */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:28px;
+}
+.stat-card{
+  background:var(--card);
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+.stat-card h3{
+  margin:0;
+  font-size:26px;
+  color:var(--accent);
+}
+.stat-card p{
+  margin:6px 0 0;
+  color:#6b7b7d;
+  font-weight:600;
+}
+
+/* Table */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+.card h3{
+  margin-top:0;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+th,td{
+  text-align:left;
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+th{
+  background:#f9fbfb;
+  font-weight:700;
+}
+
+.status{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+.pending{background:#fff3cd;color:#856404}
+.approved{background:#d4edda;color:#155724}
+.cancelled{background:#f8d7da;color:#721c24}
+
+.btn{
+  padding:6px 12px;
+  border-radius:6px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-approve{background:#28a745;color:#fff}
+.btn-cancel{background:#dc3545;color:#fff}
+
+/* Responsive */
+@media (max-width:1000px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){
+  .admin-layout{flex-direction:column}
+  .sidebar{width:100%}
+  .stats{grid-template-columns:1fr}
+}
+
+:root{
+  --accent:#ff5a4d;
+  --bg:#f3f6f5;
+  --dark:#0f1b26;
+  --card:#ffffff;
+  --text:#243437;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Header */
+.header{
+  background:#fff;
+  padding:12px 24px;
+  border-bottom:1px solid #eee;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  color:var(--accent);
+}
+.brand img{width:40px;height:40px;border-radius:50%}
+.user a{color:var(--accent);text-decoration:none}
+
+/* Layout */
+.layout{display:flex;min-height:calc(100vh - 66px)}
+
+/* Sidebar */
+.sidebar{
+  width:240px;
+  background:var(--dark);
+  color:#cfd9df;
+  padding:20px;
+}
+.sidebar h4{color:#fff;margin-bottom:16px}
+.sidebar a{
+  display:block;
+  padding:10px 12px;
+  border-radius:8px;
+  color:#cfd9df;
+  text-decoration:none;
+  margin-bottom:6px;
+  font-weight:600;
+}
+.sidebar a.active,
+.sidebar a:hover{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+/* Main */
+.main{flex:1;padding:28px}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+.card h3{margin-top:0}
+
+/* Controls */
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.controls input{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+.btn{
+  padding:10px 14px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+}
+.btn-add{background:var(--accent);color:#fff}
+
+/* Table */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+th,td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+th{background:#f9fbfb;text-align:left}
+
+.status{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+.in{background:#d4edda;color:#155724}
+.low{background:#fff3cd;color:#856404}
+.out{background:#f8d7da;color:#721c24}
+
+.action-btn{
+  padding:6px 10px;
+  border-radius:6px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+.edit{background:#007bff;color:#fff}
+.delete{background:#dc3545;color:#fff}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-content{
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+  width:100%;
+  max-width:400px;
+}
+.modal-content h4{margin-top:0}
+.modal-content input{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+.btn-cancel{background:#ccc}
+.btn-save{background:var(--accent);color:#fff}
+
+/* Responsive */
+@media (max-width:700px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%}
+}
+
+</style>
+</style>
+</head>
+
+<body>
+
+<header class="admin-header">
+  <div class="admin-brand">
+    <img src="pup_logo.png" alt="PUP Taguig">
+    PUP TAGUIG — INVENTORY
+  </div>
+  <div class="admin-user">
+    <a href="#">Logout</a>
+  </div>
+</header>
+
+
+<div class="layout">
+  <aside class="sidebar">
+    <h4>Admin Panel</h4>
+    <a href="admin-dashboard.html" >Dashboard</a>
+    <a href="admin-inventory.html" class="active">Inventory</a>
+    <a href="admin-appointments.html">Appointments</a>
+    <a href="admin-reports.html">Reports</a>
+    <a href="admin-settings.html">Settings</a>
+  </aside>
+
+  <main class="main">
+    <section class="card">
+      <h3>Clinic Inventory</h3>
+
+      <div class="controls">
+        <input type="text" id="search" placeholder="Search item...">
+        <button class="btn btn-add" onclick="openModal()">+ Add Item</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTable"></tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h4 id="modalTitle">Add Item</h4>
+    <input type="text" id="itemName" placeholder="Item name">
+    <input type="text" id="itemCategory" placeholder="Category">
+    <input type="number" id="itemQty" placeholder="Quantity">
+    <div class="modal-actions">
+      <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-save" onclick="saveItem()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+let editIndex = null;
+
+function renderTable(){
+  const table = document.getElementById("inventoryTable");
+  const search = document.getElementById("search").value.toLowerCase();
+  table.innerHTML = "";
+
+  inventory
+    .filter(item => item.name.toLowerCase().includes(search))
+    .forEach((item, index) => {
+      let status = "in";
+      if(item.qty === 0) status = "out";
+      else if(item.qty < 10) status = "low";
+
+      table.innerHTML += `
+        <tr>
+          <td>${item.name}</td>
+          <td>${item.category}</td>
+          <td>${item.qty}</td>
+          <td><span class="status ${status}">
+            ${status === "in" ? "In Stock" : status === "low" ? "Low Stock" : "Out of Stock"}
+          </span></td>
+          <td>
+            <button class="action-btn edit" onclick="editItem(${index})">Edit</button>
+            <button class="action-btn delete" onclick="deleteItem(${index})">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+}
+
+function openModal(edit=false){
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("modalTitle").innerText = edit ? "Edit Item" : "Add Item";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("itemName").value = "";
+  document.getElementById("itemCategory").value = "";
+  document.getElementById("itemQty").value = "";
+  editIndex = null;
+}
+
+function saveItem(){
+  const name = itemName.value;
+  const category = itemCategory.value;
+  const qty = Number(itemQty.value);
+
+  if(!name || !category || qty < 0) return alert("Please complete all fields.");
+
+  if(editIndex === null){
+    inventory.push({name, category, qty});
+  } else {
+    inventory[editIndex] = {name, category, qty};
+  }
+
+  localStorage.setItem("inventory", JSON.stringify(inventory));
+  closeModal();
+  renderTable();
+}
+
+function editItem(index){
+  editIndex = index;
+  const item = inventory[index];
+  itemName.value = item.name;
+  itemCategory.value = item.category;
+  itemQty.value = item.qty;
+  openModal(true);
+}
+
+function deleteItem(index){
+  if(confirm("Delete this item?")){
+    inventory.splice(index,1);
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+    renderTable();
+  }
+}
+
+document.getElementById("search").addEventListener("input", renderTable);
+renderTable();
+</script>
+
+</body>
+</html>

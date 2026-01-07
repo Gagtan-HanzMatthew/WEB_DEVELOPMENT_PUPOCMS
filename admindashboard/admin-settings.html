@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PUPT Clinic — Settings</title>
+
+<style>
+/* Main */
+.main{flex:1;padding:28px}
+
+/* Cards */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  margin-bottom:22px;
+}
+.card h3{margin-top:0}
+
+/* Form */
+.form-group{
+  margin-bottom:14px;
+}
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+}
+input,select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+.switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:6px;
+}
+.switch input{width:auto}
+
+/* Buttons */
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
+}
+.btn{
+  padding:12px 18px;
+  border-radius:10px;
+  border:none;
+  font-weight:800;
+  cursor:pointer;
+}
+.btn-save{
+  background:var(--accent);
+  color:#fff;
+}
+.btn-reset{
+  background:#ddd;
+}
+
+/* Responsive */
+@media(max-width:800px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%}
+}
+:root{
+  --accent:#ff5a4d;
+  --bg:#f3f6f5;
+  --dark:#0f1b26;
+  --text:#243437;
+  --card:#ffffff;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Header */
+.admin-header{
+  background:#fff;
+  border-bottom:1px solid #eee;
+  padding:12px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.admin-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  color:var(--accent);
+}
+.admin-brand img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+.admin-user{
+  font-weight:600;
+}
+.admin-user a{
+  color:var(--accent);
+  text-decoration:none;
+  margin-left:12px;
+}
+
+/* Layout */
+.admin-layout{
+  display:flex;
+  min-height:calc(100vh - 66px);
+}
+
+/* Sidebar */
+.sidebar{
+  width:240px;
+  background:var(--dark);
+  color:#cfd9df;
+  padding:20px;
+}
+.sidebar h4{
+  color:#fff;
+  margin:0 0 16px;
+}
+.sidebar a{
+  display:block;
+  padding:10px 12px;
+  border-radius:8px;
+  color:#cfd9df;
+  text-decoration:none;
+  margin-bottom:6px;
+  font-weight:600;
+}
+.sidebar a:hover,
+.sidebar a.active{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+/* Main */
+.main{
+  flex:1;
+  padding:28px;
+}
+
+/* Dashboard Cards */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:28px;
+}
+.stat-card{
+  background:var(--card);
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+.stat-card h3{
+  margin:0;
+  font-size:26px;
+  color:var(--accent);
+}
+.stat-card p{
+  margin:6px 0 0;
+  color:#6b7b7d;
+  font-weight:600;
+}
+
+/* Table */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+.card h3{
+  margin-top:0;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+th,td{
+  text-align:left;
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+th{
+  background:#f9fbfb;
+  font-weight:700;
+}
+
+.status{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+.pending{background:#fff3cd;color:#856404}
+.approved{background:#d4edda;color:#155724}
+.cancelled{background:#f8d7da;color:#721c24}
+
+.btn{
+  padding:6px 12px;
+  border-radius:6px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-approve{background:#28a745;color:#fff}
+.btn-cancel{background:#dc3545;color:#fff}
+
+/* Responsive */
+@media (max-width:1000px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){
+  .admin-layout{flex-direction:column}
+  .sidebar{width:100%}
+  .stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="admin-header">
+  <div class="admin-brand">
+    <img src="pup_logo.png" alt="PUP Taguig">
+    PUP TAGUIG — SETTINGS
+  </div>
+  <div class="admin-user">
+    <a href="#">Logout</a>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="admin-layout">
+
+
+  <aside class="sidebar">
+    <h4>Admin Panel</h4>
+   <a href="admin-dashboard.html" ">Dashboard</a>
+    <a href="admin-inventory.html">Inventory</a>
+    <a href="admin-appointments.html">Appointments</a>
+    <a href="admin-reports.html">Reports</a>
+    <a href="admin-settings.html"class="active">Settings</a>
+  </aside>
+
+  <main class="main">
+
+    <!-- Admin Profile -->
+<section class="card">
+  <h3>Admin Profile</h3>
+
+  <div class="form-group">
+    <label>Admin Name</label>
+    <input type="text" id="adminName" disabled>
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" id="adminEmail" disabled>
+  </div>
+
+  <div class="actions">
+  
+    <button class="btn btn-reset" onclick="openProfileModal()">Edit Profile</button>
+
+  </div>
+</section>
+
+
+    <!-- Clinic Info -->
+    <section class="card">
+      <h3>Clinic Information</h3>
+
+      <div class="form-group">
+        <label>Clinic Name</label>
+        <input type="text" id="clinicName" placeholder="Online Clinic Management System" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text" id="clinicContact" placeholder="09123456789" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="clinicLocation" disabled placeholder="Santos Ave, Lower Bicutan, Taguig City, Metro Manila">
+      </div>
+    </section>
+
+    <!-- Clinic Hours -->
+    <section class="card">
+      <h3>Clinic Hours</h3>
+
+      <div class="form-group">
+        <label>Opening Time</label>
+        <input type="time" id="openTime">
+      </div>
+
+      <div class="form-group">
+        <label>Closing Time</label>
+        <input type="time" id="closeTime">
+      </div>
+    </section>
+
+    <!-- System Preferences -->
+    <section class="card">
+      <h3>System Preferences</h3>
+
+      <div class="switch">
+        <input type="checkbox" id="emailNotif">
+        <label for="emailNotif">Enable Email Notifications</label>
+      </div>
+
+      <div class="switch">
+        <input type="checkbox" id="autoApprove">
+        <label for="autoApprove">Auto-approve Appointments</label>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-save" onclick="saveSettings()">Save Settings</button>
+      <button class="btn btn-reset" onclick="resetSettings()">Reset</button>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const defaultSettings = {
+  adminName:"",
+  adminEmail:"",
+  clinicName:"PUP Taguig Clinic",
+  clinicContact:"",
+  clinicLocation:"",
+  openTime:"08:00",
+  closeTime:"17:00",
+  emailNotif:true,
+  autoApprove:false
+};
+
+function loadSettings(){
+  const s = JSON.parse(localStorage.getItem("settings")) || defaultSettings;
+
+  clinicName.value = s.clinicName;
+  clinicContact.value = s.clinicContact;
+  clinicLocation.value = s.clinicLocation;
+  openTime.value = s.openTime;
+  closeTime.value = s.closeTime;
+  emailNotif.checked = s.emailNotif;
+  autoApprove.checked = s.autoApprove;
+}
+
+function saveSettings(){
+  const s = {
+    adminName:adminName.value,
+    adminEmail:adminEmail.value,
+    clinicName:clinicName.value,
+    clinicContact:clinicContact.value,
+    clinicLocation:clinicLocation.value,
+    openTime:openTime.value,
+    closeTime:closeTime.value,
+    emailNotif:emailNotif.checked,
+    autoApprove:autoApprove.checked
+  };
+  localStorage.setItem("settings", JSON.stringify(s));
+  alert("Settings saved successfully!");
+}
+
+function resetSettings(){
+  if(confirm("Reset settings to default?")){
+    localStorage.setItem("settings", JSON.stringify(defaultSettings));
+    loadSettings();
+  }
+}
+
+loadSettings();
+function saveProfile(){
+  const profile = {
+    name: adminName.value,
+    email: adminEmail.value
+  };
+
+  // Save to localStorage
+  localStorage.setItem("adminProfile", JSON.stringify(profile));
+  alert("Admin profile updated successfully!");
+}
+
+// Load profile on page load
+function loadProfile(){
+  const profile = JSON.parse(localStorage.getItem("adminProfile")) || {name:"Admin User", email:"admin@pup.edu.ph"};
+  adminName.value = profile.name;
+  adminEmail.value = profile.email;
+}
+
+// Initialize
+loadProfile();
+
+
+// para sa modal sa view full profile
+function openProfileModal() {
+  const profile = JSON.parse(localStorage.getItem("adminProfile")) || {name:"Admin User", email:"admin@pup.edu.ph"};
+  document.getElementById("modalAdminName").textContent = profile.name;
+  document.getElementById("modalAdminEmail").textContent = profile.email;
+  document.getElementById("profileModal").style.display = "flex";
+}
+
+function closeProfileModal() {
+  document.getElementById("profileModal").style.display = "none";
+}
+
+
+</script>
+
+</body>
+
+
+<!-- Profile Modal -->
+<div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:20px; border-radius:14px; width:350px; position:relative;">
+    <h3>Admin Profile</h3>
+
+  <div class="form-group">
+    <label>Admin Name</label>
+    <input type="text" id="modalAdminName">
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" id="modalAdminEmail">
+  </div>
+
+   <div class="form-group">
+    <label>Phone Number</label>
+    <input type="text" id="modalAdminPhonenumber">
+  </div>
+
+   <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="modalAdminPassword">
+  </div>
+
+   <div class="form-group">
+    <label>Confirm Password</label>
+    <input type="password" id="modalAdminPassword">
+  </div>
+
+  
+    <button class="btn btn-save" onclick="saveProfile()">Save Profile</button>
+    <button onclick="closeProfileModal()" style="margin-top:12px; padding:8px 14px; border:none; border-radius:8px; background:#ff5a4d; color:#fff; cursor:pointer;">Close</button>
+  </div>
+</div>
+
+
+</html>
