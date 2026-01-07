@@ -337,13 +337,17 @@ tbody tr:hover{
 
 <header class="admin-header">
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search Student ID..." />
+    <input type="text" id="searchInput" placeholder="Search Student ID..."  maxlength="15" autocomplete="off">
+<small id="idError" style="color:red; display:none;">
+  Invalid ID format (1234-1234-TG-1)
+</small>
+
   </div>
   <div class="admin-user">
     <div class="user-avatar" id="userAvatar">A</div>
     <div class="user-dropdown" id="userDropdown">
       <a href="#">Profile</a>
-      <a href="#">Settings</a>
+      <a href="admin-settings.html">Settings</a>
       <button onclick="logout()">Logout</button>
     </div>
   </div>
@@ -556,6 +560,32 @@ function lowStockCount(){
 // INIT
 updateDashboardStats();
 renderRecentAppointments();
+
+// auto format for search
+
+
+const input = document.getElementById("searchInput");
+
+input.addEventListener("input", function () {
+  // Remove hyphens & invalid chars, force uppercase
+  let raw = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+
+  // Build formatted value
+  let formatted = "";
+
+  if (raw.length <= 4) {
+    formatted = raw;
+  } else if (raw.length <= 8) {
+    formatted = raw.slice(0,4) + "-" + raw.slice(4);
+  } else if (raw.length <= 10) {
+    formatted = raw.slice(0,4) + "-" + raw.slice(4,9) + "-" + raw.slice(9);
+  } else {
+    formatted = raw.slice(0,4) + "-" + raw.slice(4,9) + "-" + raw.slice(9,11) + "-" + raw.slice(11,12);
+  }
+
+  this.value = formatted;
+});
+
 </script>
 
 
